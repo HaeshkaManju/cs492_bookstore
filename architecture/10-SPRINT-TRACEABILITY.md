@@ -185,11 +185,11 @@
 
 | Team Member | Primary Docs | Sprints |
 |-------------|--------------|---------|
-| Rich Harris (Scrum Master) | 01-SYSTEM-OVERVIEW, 09-TESTING-QA | 1, All |
+| TBD | 01-SYSTEM-OVERVIEW, 09-TESTING-QA | 1, All |
 | C. Michael Fisher (DB Lead) | 02-DATA-LAYER, 04-INVENTORY-MODULE | 1, 2 |
-| Backend Lead (TBD) | 03-AUTHENTICATION, 05-SALES, 06-PO | 1, 3+ |
-| Simone Fayson (Frontend Lead) | 07-CUSTOMER-PORTAL | 2, 4+ |
-| All Team | 08-API-REFERENCE, 09-TESTING-QA | All |
+|  (TBD) | 03-AUTHENTICATION, 05-SALES, 06-PO | 1, 3+ |
+| TBD) | 07-CUSTOMER-PORTAL | 2, 4+ |
+| TBD | 08-API-REFERENCE, 09-TESTING-QA | All |
 
 ---
 
