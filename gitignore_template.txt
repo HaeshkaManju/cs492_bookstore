@@ -1,0 +1,343 @@
+# =============================================================================
+# Bookstore Inventory System - .gitignore
+# =============================================================================
+# This file specifies patterns for files and directories that should NOT
+# be tracked by Git. This is CRITICAL for security and cleanliness.
+# =============================================================================
+
+# =============================================================================
+# SECURITY-CRITICAL: Sensitive Data (NEVER COMMIT THESE)
+# =============================================================================
+
+# Environment variables (contains secrets, API keys, passwords)
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+.env.*
+*.env
+
+# Flask instance folder (local configuration, may contain secrets)
+instance/
+instance/*.py
+instance/*.cfg
+instance/*.db
+
+# Secret keys and credentials
+config/secrets.py
+config/local.py
+secrets/
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# Database connection strings and credentials
+database.ini
+db_config.py
+
+# API keys and tokens
+api_keys.json
+tokens.json
+credentials.json
+
+# =============================================================================
+# Test Data with Sensitive Information
+# =============================================================================
+
+# Test fixtures that might contain real data
+tests/fixtures/sensitive/
+tests/fixtures/private/
+tests/data/real/
+tests/data/production/
+
+# Test databases with potentially sensitive data
+tests/*.db
+tests/*.sqlite3
+
+# =============================================================================
+# Python Artifacts
+# =============================================================================
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# =============================================================================
+# Virtual Environments
+# =============================================================================
+
+venv/
+ENV/
+env/
+.venv/
+.ENV/
+env.bak/
+venv.bak/
+
+# Virtualenv
+.virtualenv
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# poetry
+poetry.lock
+
+# =============================================================================
+# IDE and Editor Settings
+# =============================================================================
+
+# VS Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# PyCharm / JetBrains
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*.swn
+*~
+.netrwhist
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# =============================================================================
+# Testing and Coverage
+# =============================================================================
+
+# pytest
+.pytest_cache/
+pytest_cache/
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+.hypothesis/
+nosetests.xml
+
+# tox
+.tox/
+
+# nox
+.nox/
+
+# =============================================================================
+# Documentation Build
+# =============================================================================
+
+# Sphinx documentation
+docs/_build/
+docs/api/
+
+# mkdocs
+site/
+
+# =============================================================================
+# Database Files (Local Development)
+# =============================================================================
+
+# SQLite databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Database dumps
+*.sql
+!migrations/*.sql
+*.dump
+*.bak
+
+# =============================================================================
+# Logs and Temporary Files
+# =============================================================================
+
+# Log files
+logs/
+*.log
+log/
+logging/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# Cache directories
+.cache/
+cache/
+*.cache
+
+# =============================================================================
+# Operating System Files
+# =============================================================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# =============================================================================
+# Application-Specific
+# =============================================================================
+
+# User uploads (should be in cloud storage, not repo)
+uploads/
+media/
+user_uploads/
+
+# Generated invoices (contain customer data)
+invoices/
+generated_invoices/
+*.pdf
+!docs/*.pdf
+
+# Static files build artifacts
+static/dist/
+static/build/
+node_modules/
+
+# Flask session files
+flask_session/
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# =============================================================================
+# Docker (if using local volume mounts)
+# =============================================================================
+
+# Docker compose override (local settings)
+docker-compose.override.yml
+docker-compose.local.yml
+
+# Docker volumes data (if mounted locally)
+docker/data/
+.docker/
+
+# =============================================================================
+# Jupyter Notebooks (if used for analysis)
+# =============================================================================
+
+.ipynb_checkpoints/
+*.ipynb
+!docs/notebooks/*.ipynb
+
+# =============================================================================
+# Miscellaneous
+# =============================================================================
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Diff and patch files
+*.diff
+*.patch
+*.orig
+*.rej
+
+# Archives (shouldn't be in repo)
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+
+# =============================================================================
+# Project-Specific Exceptions
+# =============================================================================
+
+# Keep these files even if they match patterns above
+!.gitkeep
+!requirements.txt
+!requirements-dev.txt
+!.env.example
+!docker/docker-compose.yml

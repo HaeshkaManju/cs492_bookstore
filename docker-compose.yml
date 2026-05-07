@@ -1,0 +1,25 @@
+# Docker Compose configuration for development
+# Referenced in: S1-04-dev-environment.md
+
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: bookstore_db
+    environment:
+      POSTGRES_USER: ${DB_USER:-bookstore}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-bookstore_dev}
+      POSTGRES_DB: ${DB_NAME:-bookstore}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bookstore"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
