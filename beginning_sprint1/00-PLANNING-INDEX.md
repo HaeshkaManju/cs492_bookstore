@@ -113,11 +113,11 @@ planning/
 
 | Task | Title | Owner | Status |
 |------|-------|-------|--------|
-| S1-01 | Repository Setup | Rich Harris | ⬜ Pending |
-| S1-02 | Folder Structure | Rich Harris | ⬜ Pending |
+| S1-01 | Repository Setup | C. Michael Fisher | ⬜ Pending |
+| S1-02 | Folder Structure | C. Michael Fisher | ⬜ Pending |
 | S1-03 | Branching Strategy | Rich Harris | ⬜ Pending |
-| S1-04 | Dev Environment | Rich Harris | ⬜ Pending |
-| S1-05 | Setup Documentation | Rich Harris | ⬜ Pending |
+| S1-04 | Dev Environment | All | ⬜ Pending |
+| S1-05 | Setup Documentation | C. Michael Fisher | ⬜ Pending |
 | S1-06 | Team Access Verification | All | ⬜ Pending |
 | S1-07 | Sprint Planning Meeting | All | ⬜ Pending |
 | S1-08 | CI/CD Pipeline | Rich Harris | ⬜ Pending |
@@ -132,13 +132,13 @@ planning/
 | S1-12 | Migrations Setup | C. Michael Fisher | ⬜ Pending |
 | S1-13 | Database Connection | C. Michael Fisher | ⬜ Pending |
 | S1-14 | Schema Documentation | C. Michael Fisher | ⬜ Pending |
-| S1-15 | Roles & Permissions | Backend Dev | ⬜ Pending |
-| S1-16 | User Registration | Backend Dev | ⬜ Pending |
-| S1-17 | Login & Session | Backend Dev | ⬜ Pending |
-| S1-18 | Password Hashing | Backend Dev | ⬜ Pending |
-| S1-19 | RBAC Middleware | Backend Dev | ⬜ Pending |
-| S1-20 | Route Guards | Backend Dev | ⬜ Pending |
-| S1-21 | Customer Portal Flow | Backend Dev | ⬜ Pending |
+| S1-15 | Roles & Permissions | Willie Idolor | ⬜ Pending |
+| S1-16 | User Registration | Willie Idolor | ⬜ Pending |
+| S1-17 | Login & Session | Willie Idolor | ⬜ Pending |
+| S1-18 | Password Hashing | Willie Idolor | ⬜ Pending |
+| S1-19 | RBAC Middleware | Willie Idolor | ⬜ Pending |
+| S1-20 | Route Guards | Willie Idolor | ⬜ Pending |
+| S1-21 | Customer Portal Flow | Willie Idolor | ⬜ Pending |
 
 ---
 
