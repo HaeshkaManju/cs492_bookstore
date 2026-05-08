@@ -35,7 +35,7 @@ This is fundamentally a **CRUD application** with role-based access control and 
 │                      PRESENTATION LAYER                         │
 ├─────────────────────────────┬───────────────────────────────────┤
 │     Admin/Employee Portal   │         Customer Portal           │
-│    (React.js + TypeScript)  │    (React.js + TypeScript)        │
+│  (Flask, Flask SQL Alchemy) │    (Flask, Flask SQL Alchemy)     │
 └─────────────────────────────┴───────────────────────────────────┘
                               │
                               ▼
