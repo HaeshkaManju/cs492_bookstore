@@ -1,0 +1,78 @@
+"""
+Role-Based Access Control (RBAC)
+CS492 Bookstore Group Project
+Sprint 1 - Week 1
+
+This file controls what each user role is allowed to do in the bookstore system.
+"""
+
+from enum import Enum
+
+
+class Role(Enum):
+    ADMIN = "admin"
+    MANAGER = "manager"
+    CUSTOMER = "customer"
+
+
+class Permission(Enum):
+    VIEW_BOOKS = "view_books"
+    ADD_BOOK = "add_book"
+    EDIT_BOOK = "edit_book"
+    DELETE_BOOK = "delete_book"
+    VIEW_ORDERS = "view_orders"
+    PLACE_ORDER = "place_order"
+    MANAGE_USERS = "manage_users"
+
+
+ROLE_PERMISSIONS = {
+    Role.ADMIN: {
+        Permission.VIEW_BOOKS,
+        Permission.ADD_BOOK,
+        Permission.EDIT_BOOK,
+        Permission.DELETE_BOOK,
+        Permission.VIEW_ORDERS,
+        Permission.PLACE_ORDER,
+        Permission.MANAGE_USERS,
+    },
+    Role.MANAGER: {
+        Permission.VIEW_BOOKS,
+        Permission.ADD_BOOK,
+        Permission.EDIT_BOOK,
+        Permission.VIEW_ORDERS,
+    },
+    Role.CUSTOMER: {
+        Permission.VIEW_BOOKS,
+        Permission.PLACE_ORDER,
+    },
+}
+
+
+class User:
+    def __init__(self, username, role):
+        self.username = username
+        self.role = role
+
+    def has_permission(self, permission):
+        return permission in ROLE_PERMISSIONS.get(self.role, set())
+
+
+def authorize(user, permission):
+    if user.has_permission(permission):
+        print(f"Access granted for {user.username}: {permission.value}")
+        return True
+
+    print(f"Access denied for {user.username}: {permission.value}")
+    return False
+
+
+# Test examples for Sprint 1
+if __name__ == "__main__":
+    admin_user = User("admin01", Role.ADMIN)
+    manager_user = User("manager01", Role.MANAGER)
+    customer_user = User("customer01", Role.CUSTOMER)
+
+    authorize(admin_user, Permission.DELETE_BOOK)
+    authorize(manager_user, Permission.DELETE_BOOK)
+    authorize(customer_user, Permission.PLACE_ORDER)
+    authorize(customer_user, Permission.MANAGE_USERS)
