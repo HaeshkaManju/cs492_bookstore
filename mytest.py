@@ -1,0 +1,2 @@
+#mytest 
+print("hello world")
