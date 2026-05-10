@@ -3,7 +3,7 @@
 
 **Project:** Bookstore Inventory Management System  
 **Course:** CS491/CS492 - Team Project  
-**Group:** #3  
+**Group:** #4 
 **Last Updated:** 2026-05-05
 
 ---
