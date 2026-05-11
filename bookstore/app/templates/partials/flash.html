@@ -1,0 +1,45 @@
+{# 
+Flash Messages Partial
+======================
+Displays flash messages using Bootstrap alert components.
+
+Usage in templates:
+    {% include 'partials/flash.html' %}
+
+Flash categories map to Bootstrap alert classes:
+    - success -> alert-success (green)
+    - info    -> alert-info (blue)
+    - warning -> alert-warning (yellow)
+    - danger  -> alert-danger (red)
+    - error   -> alert-danger (red)
+
+In routes:
+    flash('Operation successful!', 'success')
+    flash('Please check your input.', 'warning')
+    flash('An error occurred.', 'danger')
+#}
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            {# Map 'error' to 'danger' for Bootstrap compatibility #}
+            {% set alert_class = 'danger' if category == 'error' else category %}
+            {% set alert_class = alert_class if alert_class in ['success', 'info', 'warning', 'danger'] else 'info' %}
+            
+            {# Map category to icon #}
+            {% set icon_map = {
+                'success': 'bi-check-circle-fill',
+                'info': 'bi-info-circle-fill',
+                'warning': 'bi-exclamation-triangle-fill',
+                'danger': 'bi-exclamation-octagon-fill'
+            } %}
+            {% set icon = icon_map.get(alert_class, 'bi-info-circle-fill') %}
+            
+            <div class="alert alert-{{ alert_class }} alert-dismissible fade show" role="alert">
+                <i class="bi {{ icon }} me-2"></i>
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}

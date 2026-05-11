@@ -1,0 +1,228 @@
+/**
+ * Bookstore Inventory Management System
+ * Custom Styles
+ * ============================================
+ */
+
+/* -----------------------------------------------------------------------------
+   CSS Variables (Custom Properties)
+   ----------------------------------------------------------------------------- */
+
+:root {
+    /* Brand Colors */
+    --bs-primary: #6f4e37;      /* Coffee brown - rare book aesthetic */
+    --bs-secondary: #8b7355;    /* Lighter brown */
+    --color-cream: #f5f1e6;     /* Old paper color */
+    --color-gold: #c9a227;      /* Gilt edges */
+    
+    /* Condition Colors */
+    --condition-fine: #198754;       /* Green - Fine */
+    --condition-very-good: #20c997;  /* Teal - Very Good */
+    --condition-good: #0d6efd;       /* Blue - Good */
+    --condition-fair: #ffc107;       /* Yellow - Fair */
+    --condition-poor: #dc3545;       /* Red - Poor */
+}
+
+/* -----------------------------------------------------------------------------
+   Base Styles
+   ----------------------------------------------------------------------------- */
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-cream);
+}
+
+main {
+    flex: 1;
+}
+
+/* -----------------------------------------------------------------------------
+   Navigation
+   ----------------------------------------------------------------------------- */
+
+.navbar-brand i {
+    margin-right: 0.25rem;
+}
+
+/* -----------------------------------------------------------------------------
+   Cards
+   ----------------------------------------------------------------------------- */
+
+.card {
+    border: none;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.card-header {
+    background-color: var(--bs-light);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* -----------------------------------------------------------------------------
+   Book Condition Badges
+   ----------------------------------------------------------------------------- */
+
+.badge-condition-5,
+.badge-condition-fine {
+    background-color: var(--condition-fine);
+}
+
+.badge-condition-4,
+.badge-condition-very-good {
+    background-color: var(--condition-very-good);
+}
+
+.badge-condition-3,
+.badge-condition-good {
+    background-color: var(--condition-good);
+}
+
+.badge-condition-2,
+.badge-condition-fair {
+    background-color: var(--condition-fair);
+    color: #000;
+}
+
+.badge-condition-1,
+.badge-condition-poor {
+    background-color: var(--condition-poor);
+}
+
+/* -----------------------------------------------------------------------------
+   Invoice Status Badges
+   ----------------------------------------------------------------------------- */
+
+.badge-status-draft {
+    background-color: var(--bs-secondary);
+}
+
+.badge-status-sent {
+    background-color: var(--bs-primary);
+}
+
+.badge-status-paid {
+    background-color: var(--bs-success);
+}
+
+.badge-status-cancelled {
+    background-color: var(--bs-danger);
+}
+
+/* -----------------------------------------------------------------------------
+   Tables
+   ----------------------------------------------------------------------------- */
+
+.table th {
+    font-weight: 600;
+    background-color: var(--bs-light);
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(111, 78, 55, 0.05);
+}
+
+/* -----------------------------------------------------------------------------
+   Forms
+   ----------------------------------------------------------------------------- */
+
+.form-label {
+    font-weight: 500;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.2rem rgba(111, 78, 55, 0.25);
+}
+
+/* Required field indicator */
+.required::after {
+    content: " *";
+    color: var(--bs-danger);
+}
+
+/* -----------------------------------------------------------------------------
+   Dashboard Stats
+   ----------------------------------------------------------------------------- */
+
+.stat-card {
+    border-left: 4px solid var(--bs-primary);
+}
+
+.stat-card .stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--bs-primary);
+}
+
+.stat-card .stat-label {
+    font-size: 0.875rem;
+    color: var(--bs-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* -----------------------------------------------------------------------------
+   Pagination
+   ----------------------------------------------------------------------------- */
+
+.page-link {
+    color: var(--bs-primary);
+}
+
+.page-item.active .page-link {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+}
+
+/* -----------------------------------------------------------------------------
+   Empty States
+   ----------------------------------------------------------------------------- */
+
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: var(--bs-secondary);
+}
+
+.empty-state i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+/* -----------------------------------------------------------------------------
+   Utility Classes
+   ----------------------------------------------------------------------------- */
+
+.text-muted-light {
+    color: #adb5bd;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+/* -----------------------------------------------------------------------------
+   Print Styles
+   ----------------------------------------------------------------------------- */
+
+@media print {
+    .navbar,
+    .footer,
+    .btn,
+    .no-print {
+        display: none !important;
+    }
+    
+    body {
+        background-color: white;
+    }
+    
+    .card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+}
