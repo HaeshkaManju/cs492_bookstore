@@ -1,0 +1,66 @@
+"""
+User Registration
+CS492 Bookstore Group Project
+Sprint 1 - Week 2
+
+This program allows new bookstore users to register with a username,
+password, and role. User information is saved in a JSON file.
+"""
+
+import json
+import hashlib
+import os
+from role_based_access import Role
+
+
+USER_FILE = "users.json"
+
+
+def hash_password(password):
+    """Convert the password into a secure hash."""
+    return hashlib.sha256(password.encode()).hexdigest()
+
+
+def load_users():
+    """Load existing users from the JSON file."""
+    if not os.path.exists(USER_FILE):
+        return {}
+
+    with open(USER_FILE, "r") as file:
+        return json.load(file)
+
+
+def save_users(users):
+    """Save users to the JSON file."""
+    with open(USER_FILE, "w") as file:
+        json.dump(users, file, indent=4)
+
+
+def register_user(username, password, role="customer"):
+    """Register a new bookstore user."""
+    users = load_users()
+
+    if username in users:
+        print("Registration failed: Username already exists.")
+        return False
+
+    try:
+        user_role = Role(role.lower())
+    except ValueError:
+        print("Registration failed: Invalid role.")
+        return False
+
+    users[username] = {
+        "password": hash_password(password),
+        "role": user_role.value
+    }
+
+    save_users(users)
+    print(f"Registration successful: {username} was added as {user_role.value}.")
+    return True
+
+
+if __name__ == "__main__":
+    register_user("admin01", "Admin123", "admin")
+    register_user("manager01", "Manager123", "manager")
+    register_user("customer01", "Customer123", "customer")
