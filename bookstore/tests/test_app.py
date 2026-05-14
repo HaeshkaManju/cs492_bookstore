@@ -14,3 +14,12 @@ def test_home_endpoint():
     data = response.get_json()
     assert data["status"] == "success"
     assert "Bookstore Management System API is running" in data["message"]
+
+def test_health_endpoint():
+    client = app.test_client()
+    response = client.get("/health")
+
+    assert response.status_code == 200
+    data = response.get_json()
+    assert data["status"] == "healthy"
+    assert data["service"] == "bookstore-api"

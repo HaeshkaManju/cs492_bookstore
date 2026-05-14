@@ -9,5 +9,12 @@ def home():
         "status": "success"
     })
 
+@app.route("/health")
+def health():
+    return jsonify({
+        "service": "bookstore-api",
+        "status": "healthy"
+    })
+
 if __name__ == "__main__":
     app.run(debug=True)
