@@ -23,3 +23,13 @@ def test_health_endpoint():
     data = response.get_json()
     assert data["status"] == "healthy"
     assert data["service"] == "bookstore-api"
+
+def test_version_endpoint():
+    client = app.test_client()
+    response = client.get("/version")
+
+    assert response.status_code == 200
+
+    data = response.get_json()
+    assert data["application"] == "Bookstore Management System"
+    assert data["version"] == "1.0"

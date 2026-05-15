@@ -16,5 +16,12 @@ def health():
         "status": "healthy"
     })
 
+@app.route("/version")
+def version():
+    return jsonify({
+        "application": "Bookstore Management System",
+        "version": "1.0"
+    })
+
 if __name__ == "__main__":
     app.run(debug=True)
