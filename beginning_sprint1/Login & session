@@ -1,0 +1,89 @@
+"""
+Login and Session Management
+CS492 Bookstore Group Project
+Sprint 1 - Week 2
+
+This file allows registered bookstore users to log in, maintain
+an active session, check the current user, and log out.
+"""
+
+import json
+import hashlib
+import os
+from role_based_access import Role, User, authorize, Permission
+
+
+USER_FILE = "users.json"
+
+
+def hash_password(password):
+    """Hashes the password so it can be checked securely."""
+    return hashlib.sha256(password.encode()).hexdigest()
+
+
+def load_users():
+    """Loads registered users from users.json."""
+    if not os.path.exists(USER_FILE):
+        print("No users found. Please register a user first.")
+        return {}
+
+    with open(USER_FILE, "r") as file:
+        return json.load(file)
+
+
+class SessionManager:
+    def __init__(self):
+        self.current_user = None
+
+    def login(self, username, password):
+        """Logs in a registered user and starts a session."""
+        users = load_users()
+
+        if username not in users:
+            print("Login failed: Username not found.")
+            return False
+
+        saved_password = users[username]["password"]
+
+        if saved_password != hash_password(password):
+            print("Login failed: Incorrect password.")
+            return False
+
+        user_role = Role(users[username]["role"])
+        self.current_user = User(username, user_role)
+
+        print(f"Login successful. Welcome, {username}!")
+        return True
+
+    def logout(self):
+        """Ends the current user session."""
+        if self.current_user is None:
+            print("No user is currently logged in.")
+            return False
+
+        print(f"{self.current_user.username} logged out successfully.")
+        self.current_user = None
+        return True
+
+    def is_logged_in(self):
+        """Checks whether a user is currently logged in."""
+        return self.current_user is not None
+
+    def get_current_user(self):
+        """Returns the current logged-in user."""
+        return self.current_user
+
+
+if __name__ == "__main__":
+    session = SessionManager()
+
+    session.login("customer01", "Customer123")
+
+    if session.is_logged_in():
+        current_user = session.get_current_user()
+
+        authorize(current_user, Permission.VIEW_BOOKS)
+        authorize(current_user, Permission.PLACE_ORDER)
+        authorize(current_user, Permission.DELETE_BOOK)
+
+    session.logout()
