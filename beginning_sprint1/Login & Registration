@@ -1,0 +1,117 @@
+"""
+Login and User Registration
+CS492 Bookstore Group Project
+Sprint 1 - Week 2
+
+This file allows bookstore users to register, log in, and log out.
+User account information is saved in users.json.
+"""
+
+import json
+import hashlib
+import os
+from role_based_access import Role, User, authorize, Permission
+
+
+USER_FILE = "users.json"
+
+
+def hash_password(password):
+    """Hashes the user's password before saving it."""
+    return hashlib.sha256(password.encode()).hexdigest()
+
+
+def load_users():
+    """Loads all registered users from users.json."""
+    if not os.path.exists(USER_FILE):
+        return {}
+
+    with open(USER_FILE, "r") as file:
+        return json.load(file)
+
+
+def save_users(users):
+    """Saves all registered users to users.json."""
+    with open(USER_FILE, "w") as file:
+        json.dump(users, file, indent=4)
+
+
+class LoginRegistrationSystem:
+    def __init__(self):
+        self.current_user = None
+
+    def register_user(self, username, password, role="customer"):
+        """Registers a new user with a username, password, and role."""
+        users = load_users()
+
+        if username in users:
+            print("Registration failed: Username already exists.")
+            return False
+
+        try:
+            user_role = Role(role.lower())
+        except ValueError:
+            print("Registration failed: Invalid role.")
+            return False
+
+        users[username] = {
+            "password": hash_password(password),
+            "role": user_role.value
+        }
+
+        save_users(users)
+        print(f"Registration successful: {username} was added as {user_role.value}.")
+        return True
+
+    def login(self, username, password):
+        """Logs in a registered user."""
+        users = load_users()
+
+        if username not in users:
+            print("Login failed: User does not exist.")
+            return False
+
+        saved_password = users[username]["password"]
+
+        if saved_password != hash_password(password):
+            print("Login failed: Incorrect password.")
+            return False
+
+        user_role = Role(users[username]["role"])
+        self.current_user = User(username, user_role)
+
+        print(f"Login successful. Welcome, {username}!")
+        return True
+
+    def logout(self):
+        """Logs out the current user."""
+        if self.current_user is None:
+            print("No user is currently logged in.")
+            return False
+
+        print(f"{self.current_user.username} logged out successfully.")
+        self.current_user = None
+        return True
+
+    def get_current_user(self):
+        """Returns the current logged-in user."""
+        return self.current_user
+
+
+if __name__ == "__main__":
+    system = LoginRegistrationSystem()
+
+    system.register_user("admin01", "Admin123", "admin")
+    system.register_user("manager01", "Manager123", "manager")
+    system.register_user("customer01", "Customer123", "customer")
+
+    system.login("customer01", "Customer123")
+
+    current_user = system.get_current_user()
+
+    if current_user:
+        authorize(current_user, Permission.VIEW_BOOKS)
+        authorize(current_user, Permission.PLACE_ORDER)
+        authorize(current_user, Permission.DELETE_BOOK)
+
+    system.logout()
