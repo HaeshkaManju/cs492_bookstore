@@ -49,6 +49,8 @@ class NotFoundError(ServiceError):
             code='NOT_FOUND',
             details={'resource': resource, 'id': str(id)}
         )
+        self.resource_type = resource
+        self.resource_id = id
 
 
 class ConflictError(ServiceError):

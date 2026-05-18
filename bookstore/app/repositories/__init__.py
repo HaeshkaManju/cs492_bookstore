@@ -34,20 +34,25 @@ Integration Points:
 
 from app.repositories.base import BaseRepository
 from app.repositories.user_repository import UserRepository
-from app.repositories.customer_repository import CustomerRepository
+from app.repositories.customer_repository import CustomerRepository, AddressRepository
 from app.repositories.book_repository import BookRepository
-from app.repositories.inventory_repository import InventoryRepository
-from app.repositories.invoice_repository import InvoiceRepository
+from app.repositories.inventory_repository import InventoryRepository, WarehouseRepository
+from app.repositories.invoice_repository import InvoiceRepository, InvoiceLineRepository
 from app.repositories.book_request_repository import BookRequestRepository
-from app.repositories.purchase_order_repository import PurchaseOrderRepository
+from app.repositories.purchase_order_repository import PurchaseOrderRepository, ManufacturerRepository, POLineRepository
 
 __all__ = [
     'BaseRepository',
     'UserRepository',
     'CustomerRepository',
+    'AddressRepository',
     'BookRepository',
     'InventoryRepository',
+    'WarehouseRepository',
     'InvoiceRepository',
+    'InvoiceLineRepository',
     'BookRequestRepository',
     'PurchaseOrderRepository',
+    'ManufacturerRepository',
+    'POLineRepository',
 ]

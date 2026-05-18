@@ -1,8 +1,9 @@
 "use client"
 
 import { useState } from "react"
-import { Search, Filter, MoreHorizontal, BookOpen } from "lucide-react"
+import { Search, Filter, MoreHorizontal, BookOpen, RefreshCw } from "lucide-react"
 import { useStore } from "@/lib/store-context"
+import { AddBookDialog } from "@/components/admin/add-book-dialog"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -30,7 +31,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 export function InventoryPage() {
-  const { books } = useStore()
+  const { books, isLoading, refreshBooks } = useStore()
   const [searchTitle, setSearchTitle] = useState("")
   const [searchAuthor, setSearchAuthor] = useState("")
   const [searchIsbn, setSearchIsbn] = useState("")
@@ -72,10 +73,18 @@ export function InventoryPage() {
           <h1 className="text-2xl font-semibold text-foreground">Inventory</h1>
           <p className="text-sm text-muted-foreground">Manage your rare book collection</p>
         </div>
-        <Button className="w-fit bg-primary text-primary-foreground hover:bg-primary/90">
-          <BookOpen className="mr-2 h-4 w-4" />
-          Add New Book
-        </Button>
+        <div className="flex gap-2">
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => refreshBooks()}
+            disabled={isLoading}
+            className="border-border"
+          >
+            <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
+          </Button>
+          <AddBookDialog />
+        </div>
       </div>
 
       {/* Stats */}

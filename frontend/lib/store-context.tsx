@@ -1,6 +1,17 @@
 "use client"
 
-import { createContext, useContext, useState, ReactNode } from "react"
+/**
+ * Store Context
+ * =============
+ * 
+ * Task: INT-S2-002
+ * 
+ * Provides store state with API integration.
+ * Falls back to sample data when API is unavailable.
+ */
+
+import { createContext, useContext, useState, useEffect, ReactNode } from "react"
+import { api, Book as ApiBook, Inventory, Invoice, PurchaseOrder as ApiPO } from "./api-client"
 
 export interface Book {
   id: string
@@ -45,11 +56,16 @@ interface StoreContextType {
   cart: CartItem[]
   salesRecords: SalesRecord[]
   purchaseOrders: PurchaseOrder[]
+  isLoading: boolean
+  error: string | null
   addToCart: (book: Book) => void
   removeFromCart: (bookId: string) => void
   updateCartQuantity: (bookId: string, quantity: number) => void
   clearCart: () => void
   cartTotal: number
+  refreshBooks: () => Promise<void>
+  refreshSales: () => Promise<void>
+  refreshOrders: () => Promise<void>
 }
 
 const StoreContext = createContext<StoreContextType | undefined>(undefined)
@@ -241,11 +257,108 @@ const samplePurchaseOrders: PurchaseOrder[] = [
   }
 ]
 
+// Map condition number to label
+const conditionMap: Record<number, Book['condition']> = {
+  5: "Mint",
+  4: "Near Mint",
+  3: "Very Good",
+  2: "Good",
+  1: "Fair"
+}
+
+// Transform API inventory to frontend Book format
+function inventoryToBook(inv: Inventory): Book {
+  return {
+    id: inv.id,
+    title: inv.book_title || 'Unknown',
+    author: inv.book_author || 'Unknown',
+    isbn: '',
+    price: inv.list_price,
+    condition: conditionMap[inv.condition] || "Good",
+    year: 0,
+    quantity: inv.quantity,
+    description: '',
+    category: ''
+  }
+}
+
 export function StoreProvider({ children }: { children: ReactNode }) {
-  const [books] = useState<Book[]>(sampleBooks)
+  const [books, setBooks] = useState<Book[]>(sampleBooks)
   const [cart, setCart] = useState<CartItem[]>([])
-  const [salesRecords] = useState<SalesRecord[]>(sampleSalesRecords)
-  const [purchaseOrders] = useState<PurchaseOrder[]>(samplePurchaseOrders)
+  const [salesRecords, setSalesRecords] = useState<SalesRecord[]>(sampleSalesRecords)
+  const [purchaseOrders, setPurchaseOrders] = useState<PurchaseOrder[]>(samplePurchaseOrders)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  // Fetch books/inventory from API
+  const refreshBooks = async () => {
+    setIsLoading(true)
+    setError(null)
+    try {
+      const response = await api.getInventory({ in_stock_only: true, per_page: 100 })
+      if (response.success && response.data) {
+        const apiBooks = response.data.map(inventoryToBook)
+        if (apiBooks.length > 0) {
+          setBooks(apiBooks)
+        }
+      }
+    } catch (err) {
+      console.warn('Failed to fetch from API, using sample data')
+      setError('Using offline data')
+    }
+    setIsLoading(false)
+  }
+
+  // Fetch sales/invoices from API
+  const refreshSales = async () => {
+    try {
+      const response = await api.getInvoices({ per_page: 50 })
+      if (response.success && response.data && response.data.length > 0) {
+        const records: SalesRecord[] = response.data.map((inv: Invoice) => ({
+          id: inv.invoice_number,
+          bookId: inv.id,
+          bookTitle: `Invoice ${inv.invoice_number}`,
+          customer: inv.customer_id,
+          quantity: 1,
+          total: inv.subtotal,
+          date: inv.created_at.split('T')[0],
+          status: inv.status === 'paid' ? 'Completed' : inv.status === 'cancelled' ? 'Refunded' : 'Pending'
+        }))
+        setSalesRecords(records)
+      }
+    } catch {
+      console.warn('Failed to fetch sales, using sample data')
+    }
+  }
+
+  // Fetch purchase orders from API
+  const refreshOrders = async () => {
+    try {
+      const response = await api.getPurchaseOrders({ per_page: 50 })
+      if (response.success && response.data && response.data.length > 0) {
+        const orders: PurchaseOrder[] = response.data.map((po: ApiPO) => ({
+          id: po.po_number,
+          supplier: po.manufacturer?.name || 'Unknown',
+          items: po.lines?.map(l => ({ title: l.description, quantity: l.quantity, cost: l.unit_cost })) || [],
+          total: po.total,
+          date: po.created_at.split('T')[0],
+          status: po.status === 'received' ? 'Received' : 
+                  po.status === 'confirmed' || po.status === 'submitted' ? 'Approved' :
+                  po.status === 'cancelled' ? 'Cancelled' : 'Pending'
+        }))
+        setPurchaseOrders(orders)
+      }
+    } catch {
+      console.warn('Failed to fetch orders, using sample data')
+    }
+  }
+
+  // Initial data load
+  useEffect(() => {
+    refreshBooks()
+    refreshSales()
+    refreshOrders()
+  }, [])
 
   const addToCart = (book: Book) => {
     setCart(prev => {
@@ -290,11 +403,16 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         cart,
         salesRecords,
         purchaseOrders,
+        isLoading,
+        error,
         addToCart,
         removeFromCart,
         updateCartQuantity,
         clearCart,
-        cartTotal
+        cartTotal,
+        refreshBooks,
+        refreshSales,
+        refreshOrders
       }}
     >
       {children}

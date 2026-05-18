@@ -267,7 +267,7 @@ Tasks:
 5. Create typed API response interfaces
 ```
 
-**File to create:** `UI/lib/api-client.ts`
+**File to create:** `frontend/lib/api-client.ts`
 
 ---
 
@@ -538,10 +538,10 @@ Tasks:
 - **NEW endpoints go in:** `bookstore/app/blueprints/` (create subdirectories)
 
 ### Frontend (Next.js)
-- Pages: `UI/app/`
-- Components: `UI/components/`
-- Store/Context: `UI/lib/store-context.tsx`
-- **NEW API client goes in:** `UI/lib/api-client.ts`
+- Pages: `frontend/app/`
+- Components: `frontend/components/`
+- Store/Context: `frontend/lib/store-context.tsx`
+- **NEW API client goes in:** `frontend/lib/api-client.ts`
 
 ### Tests
 - Unit: `bookstore/tests/unit/`

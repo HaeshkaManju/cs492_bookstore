@@ -13,6 +13,7 @@ from flask import Flask
 
 from app.extensions import db, migrate, login_manager, csrf
 from app.config import config
+from flask_cors import CORS
 
 
 def create_app(config_name: str = 'development') -> Flask:
@@ -58,6 +59,16 @@ def create_app(config_name: str = 'development') -> Flask:
     
     # Initialize Flask extensions
     _init_extensions(app)
+    
+    # Initialize CORS
+    CORS(app, resources={
+        r"/api/*": {
+            "origins": ["http://localhost:3000", "http://127.0.0.1:3000"],
+            "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+            "allow_headers": ["Content-Type", "Authorization"],
+            "supports_credentials": True
+        }
+    })
     
     # Register blueprints
     _register_blueprints(app)
@@ -132,12 +143,9 @@ def _register_blueprints(app: Flask) -> None:
     # Main blueprint (home, health checks)
     app.register_blueprint(main_bp)
     
-    # Additional blueprints will be registered as they are created:
-    # from app.blueprints.auth import bp as auth_bp
-    # app.register_blueprint(auth_bp, url_prefix='/auth')
-    #
-    # from app.blueprints.inventory import bp as inventory_bp
-    # app.register_blueprint(inventory_bp, url_prefix='/inventory')
+    # API blueprint (REST endpoints)
+    from app.blueprints.api import bp as api_bp
+    app.register_blueprint(api_bp)
 
 
 def _register_context_processors(app: Flask) -> None:
