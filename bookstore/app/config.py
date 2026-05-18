@@ -80,7 +80,7 @@ class DevelopmentConfig(Config):
     """
     Development configuration.
     
-    Enables debug mode and uses local PostgreSQL database.
+    Enables debug mode and uses SQLite for simple local development.
     Optimized for rapid development with verbose output.
     """
     
@@ -90,13 +90,14 @@ class DevelopmentConfig(Config):
     # Faster password hashing for development
     BCRYPT_LOG_ROUNDS = 4
     
-    # Show SQL queries in console
-    SQLALCHEMY_ECHO = True
+    # Show SQL queries in console (set False to reduce noise)
+    SQLALCHEMY_ECHO = False
     
-    # Development database
+    # Development database - SQLite for simplicity
+    # Uses instance folder for database file
     SQLALCHEMY_DATABASE_URI = os.environ.get(
         'DATABASE_URL',
-        'postgresql://bookstore:bookstore_dev@localhost:5432/bookstore_dev'
+        'sqlite:///bookstore_dev.db'
     )
 
 

@@ -16,13 +16,13 @@ interface AuthContextType {
   user: User | null
   isLoading: boolean
   isAuthenticated: boolean
-  login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>
+  login: (email: string, password: string) => Promise<{ success: boolean; error?: string; role?: string }>
   register: (data: {
     email: string
     password: string
     first_name: string
     last_name: string
-  }) => Promise<{ success: boolean; error?: string }>
+  }) => Promise<{ success: boolean; error?: string; role?: string }>
   logout: () => Promise<void>
   refreshUser: () => Promise<void>
 }
@@ -61,7 +61,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const response = await api.login(email, password)
       if (response.success && response.data) {
         setUser(response.data.user)
-        return { success: true }
+        return { success: true, role: response.data.user.role }
       }
       return {
         success: false,
@@ -85,7 +85,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const response = await api.register(data)
       if (response.success && response.data) {
         setUser(response.data.user)
-        return { success: true }
+        return { success: true, role: response.data.user.role }
       }
       return {
         success: false,

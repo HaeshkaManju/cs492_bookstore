@@ -38,7 +38,12 @@ export default function LoginPage() {
     
     if (result.success) {
       // Redirect based on user role
-      router.push("/")
+      const userRole = result.role
+      if (userRole === 'admin' || userRole === 'employee') {
+        router.push("/admin")
+      } else {
+        router.push("/customer")
+      }
     } else {
       setError(result.error || "Login failed")
     }
@@ -146,9 +151,9 @@ export default function LoginPage() {
           <CardContent className="pt-6">
             <p className="text-sm font-medium text-muted-foreground mb-2">Demo Credentials:</p>
             <div className="space-y-1 text-xs text-muted-foreground">
-              <p><span className="font-medium">Admin:</span> admin@bookstore.com / admin123</p>
-              <p><span className="font-medium">Employee:</span> employee@bookstore.com / employee123</p>
-              <p><span className="font-medium">Customer:</span> customer@bookstore.com / customer123</p>
+              <p><span className="font-medium">Admin:</span> admin@bookstore.com / admin</p>
+              <p><span className="font-medium">Employee:</span> employee@bookstore.com / employee</p>
+              <p><span className="font-medium">Customer:</span> customer@bookstore.com / customer</p>
             </div>
           </CardContent>
         </Card>

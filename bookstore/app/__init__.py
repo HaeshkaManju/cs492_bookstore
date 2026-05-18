@@ -146,6 +146,9 @@ def _register_blueprints(app: Flask) -> None:
     # API blueprint (REST endpoints)
     from app.blueprints.api import bp as api_bp
     app.register_blueprint(api_bp)
+    
+    # Exempt API from CSRF (uses JWT authentication instead)
+    csrf.exempt(api_bp)
 
 
 def _register_context_processors(app: Flask) -> None:

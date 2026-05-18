@@ -97,10 +97,14 @@ HOME_TEMPLATE = """
 </head>
 <body>
     <div class="container">
-        <h1>Bookstore Inventory</h1>
-        <p class="subtitle">Rare Book Management System</p>
+        <h1>Bookstore API</h1>
+        <p class="subtitle">Backend REST API Server</p>
         
         <div class="status-card">
+            <div class="status-row" style="background: rgba(100,255,218,0.1); border-radius: 8px; padding: 1rem; margin-bottom: 1rem; border: 1px solid #64ffda;">
+                <span class="status-label" style="color: #64ffda;">Frontend App</span>
+                <span class="status-value ok"><a href="http://localhost:3000" style="color: #64ffda;">http://localhost:3000</a></span>
+            </div>
             <div class="status-row">
                 <span class="status-label">Application Status</span>
                 <span class="status-value ok">Running</span>
@@ -120,8 +124,11 @@ HOME_TEMPLATE = """
             
             <div class="api-links">
                 <h3>API Endpoints</h3>
-                <a href="/api/health">Health Check</a>
-                <a href="/api/status">System Status</a>
+                <a href="/api/v1/books">Books</a>
+                <a href="/api/v1/inventory">Inventory</a>
+                <a href="/api/v1/warehouses">Warehouses</a>
+                <a href="/api/health">Health</a>
+                <a href="/api/status">Status</a>
             </div>
         </div>
         

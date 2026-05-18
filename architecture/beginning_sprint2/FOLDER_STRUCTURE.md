@@ -43,7 +43,7 @@ cs492_bookstore/
 │
 ├── architecture/     # Design documents (including beginning_sprint1, beginning_sprint2)
 │   ├── beginning_sprint1/   # Sprint 1 planning docs
-│   ├── beginning_sprint2/   # Sprint 2 planning docs (this folder)
+│   ├── beginning_sprint2/   # Sprint 2 planning docs (FOLDER_STRUCTURE, SPRINT2_COMPLETION_PLAN, TEST_ACCOUNTS)
 │   └── diagrams/            # Architecture diagrams
 └── unit_tests/       # Legacy tests folder
 ```
